@@ -1,0 +1,344 @@
+{% extends "layout/base.html" %}
+{% load static %}
+{% block title %}거래처{% endblock title %}
+
+{% block stylesheets %}
+{% endblock stylesheets %}
+
+{% block contents %}
+<div class="card">
+    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary">거래처</h6>    
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">거래처 등록</button>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>회사이름</th>
+                        <th>대표이름</th>
+                        <th>사업자번호</th>
+                        <th>대표메일</th>
+                        <th>전화번호</th>
+                        <th>팩스</th>
+                        <th>주소</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for client in clients %}
+                    <tr onclick="$('#{{client.client_id}}').modal('show')">
+                        <td>{{client.client_corp_name}}</td>
+                        <td>{{client.client_name}}</td>
+                        <td>{{client.client_number}}</td>
+                        <td>{{client.client_email}}</td>
+                        <td>{{client.client_tel}}</td>
+                        <td>{{client.client_fax}}</td>
+                        <td>{{client.client_address}}</td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock contents %}
+
+
+{% block modals %}
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">거래처 등록하기</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form action="/client/create/" method="post" id="client_create">
+
+                <div class="d-flex align-items-center mb-3">
+                    <label class="col-md-3" for="">회사이름</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="client_corp_name" id="" value="">
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-center mb-3">
+                    <label class="col-md-3" for="">대표이름</label>
+                    <div class="col-md-9">
+                        <input type="text" class=" form-control" name="client_name" id="" value="">
+                    </div>
+                    
+                </div>
+
+                <div class="d-flex align-items-center mb-3">
+                    <label class="col-md-3" for="">사업자 번호</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="client_number" id="" value="">
+                    </div>
+                    
+                </div>
+
+                <div class="d-flex">
+                    <label class="col-md-3" for="">주소</label>
+                    <div class="col-md-9">
+                        <div class="d-flex flex-row-reverse">
+                            <div class="col-md-6 mb-3">
+                                <input type="button" class="btn btn-primary" onclick="sample3_execDaumPostcode()" value="우편번호 찾기">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <input class="form-control" name="" type="text" id="sample3_postcode" placeholder="우편번호"  >
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <div class="col-lg-12">
+                                <input class="form-control " name="client_address" type="text" id="sample3_address" value="" >
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="d-flex flex-row-reverse">
+                            <div class="col-md-6 mb-3">
+                                <input class="form-control" name="user_addr_reference" type="text" id="sample3_extraAddress" placeholder="참고항목" >
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <input class="form-control" name="user_addr_detail" type="text" id="sample3_detailAddress" placeholder="상세주소(선택항목)">
+                            </div>
+                        </div>
+                        <div class="d-flex mb-3 ">
+                            <div id="wrap" style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
+                                <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-center mb-3">
+                    <label class="col-lg-3" for="">업태</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="client_type" id="" value="">
+                    </div>
+                    
+                </div>
+
+                <div class="d-flex align-items-center mb-3">
+                    <label class="col-lg-3" for="">종목</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="client_job_type" id="" value="">
+                    </div>
+                    
+                </div>
+
+                <div class="d-flex align-items-center mb-3">
+                    <label class="col-lg-3" for="">대표메일</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="client_email" id="" value="">
+                    </div>
+                    
+                </div>
+
+                <div class="d-flex align-items-center mb-3">
+                    <label class="col-lg-3" for="">경리메일</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="client_sub_email" id="" value="">
+                    </div>
+                    
+                </div>
+
+                <div class="d-flex align-items-center mb-3">
+                    <label class="col-lg-3" for="">대표전화</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="client_tel" id="" value="">
+                    </div>
+                    
+                </div>
+
+                <div class="d-flex align-items-center mb-3">
+                    <label class="col-lg-3" for="">경리번호</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="client_sub_tel" id="" value="">
+                    </div>
+                    
+                </div>
+
+                <div class="d-flex align-items-center mb-3">
+                    <label class="col-lg-3" for="">팩스</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="client_fax" id="" value="">
+                    </div>
+                    
+                </div>
+                <div class="d-flex align-items-center mb-3">
+                    <label class="col-lg-3" for="">비고</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="etc" id="" value="">
+                    </div>
+                    
+                </div>
+            </form>   
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+          <button type="submit" class="btn btn-primary" onclick="document.getElementById('client_create').submit()">등록</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+{% for client in clients %}
+  <div class="modal fade" id="{{client.client_id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">거래처 상세 정보 및 수정</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form action="/client/modify/" method="post" id="client_modify{{client.client_id}}">
+                {% csrf_token %}
+                <input type="hidden" name="client_id" value="{{client.client_id}}">
+                <div class="d-flex align-items-center mb-3">
+                    <label class="col-md-3" for="">회사이름</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="client_corp_name" id="" value="{{client.client_corp_name}}">
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-center mb-3">
+                    <label class="col-md-3" for="">대표이름</label>
+                    <div class="col-md-9">
+                        <input type="text" class=" form-control" name="client_name" id="" value="{{client.client_name}}">
+                    </div>
+                    
+                </div>
+
+                <div class="d-flex align-items-center mb-3">
+                    <label class="col-md-3" for="">사업자 번호</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="client_number" id="" value="{{client.client_number}}">
+                    </div>
+                    
+                </div>
+
+                <div class="d-flex">
+                    <label class="col-md-3" for="">주소</label>
+                    <div class="col-md-9">
+                        <div class="d-flex flex-row-reverse">
+                            <div class="col-md-6 mb-3">
+                                <input type="button" class="btn btn-primary" onclick="sample3_execDaumPostcode()" value="우편번호 찾기">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <input class="form-control" name="" type="text" id="sample3_postcode" placeholder="우편번호"  >
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <div class="col-lg-12">
+                                <input class="form-control " name="client_address" type="text" id="sample3_address" value="{{client.client_address}}" >
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="d-flex flex-row-reverse">
+                            <div class="col-md-6 mb-3">
+                                <input class="form-control" name="user_addr_reference" type="text" id="sample3_extraAddress" placeholder="참고항목" >
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <input class="form-control" name="user_addr_detail" type="text" id="sample3_detailAddress" placeholder="상세주소(선택항목)">
+                            </div>
+                        </div>
+                        <div class="d-flex mb-3 ">
+                            <div id="wrap" style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
+                                <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-center mb-3">
+                    <label class="col-lg-3" for="">업태</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="client_type" id="" value="{{client.client_type}}">
+                    </div>
+                    
+                </div>
+
+                <div class="d-flex align-items-center mb-3">
+                    <label class="col-lg-3" for="">종목</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="client_job_type" id="" value="{{client.client_job_type}}">
+                    </div>
+                    
+                </div>
+
+                <div class="d-flex align-items-center mb-3">
+                    <label class="col-lg-3" for="">대표메일</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="client_email" id="" value="{{client.client_email}}">
+                    </div>
+                    
+                </div>
+
+                <div class="d-flex align-items-center mb-3">
+                    <label class="col-lg-3" for="">경리메일</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="client_sub_email" id="" value="{{client.client_sub_email}}">
+                    </div>
+                    
+                </div>
+
+                <div class="d-flex align-items-center mb-3">
+                    <label class="col-lg-3" for="">대표전화</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="client_tel" id="" value="{{client.client_tel}}">
+                    </div>
+                    
+                </div>
+
+                <div class="d-flex align-items-center mb-3">
+                    <label class="col-lg-3" for="">경리번호</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="client_sub_tel" id="" value="{{client.client_sub_tel}}">
+                    </div>
+                </div>
+                <div class="d-flex align-items-center mb-3">
+                    <label class="col-lg-3" for="">팩스</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="client_fax" id="" value="{{client.client_fax}}">
+                    </div>
+                </div>
+                <div class="d-flex align-items-center mb-3">
+                    <label class="col-lg-3" for="">비고</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="etc" id="" value="{{client.etc}}">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+          <button type="button" class="btn btn-primary" onclick="document.getElementById('client_modify{{client.client_id}}').submit()">등록</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+
+
+{% endblock modals %}
+
+
+{% block javascripts %}
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="{% static 'js/find_addr.js' %}?ver=2"></script>
+{% endblock javascripts %}

@@ -1,0 +1,131 @@
+{% extends "layout/base.html" %}
+
+{% block title %}메인화면{% endblock title %}
+
+{% block stylesheets %}
+{% endblock stylesheets %}
+
+{% block contents %}
+
+<div class="card shadow mb-3">
+    <div class="card-header">
+        <h5>카드</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Position</th>
+                        <th>Office</th>
+                        <th>Age</th>
+                        <th>Start date</th>
+                        <th>Salary</th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                    <tr>
+                        <td>Tiger Nixon</td>
+                        <td>System Architect</td>
+                        <td>Edinburgh</td>
+                        <td>61</td>
+                        <td>2011/04/25</td>
+                        <td>$320,800</td>
+                    </tr>
+                    <tr>
+                        <td>Garrett Winters</td>
+                        <td>Accountant</td>
+                        <td>Tokyo</td>
+                        <td>63</td>
+                        <td>2011/07/25</td>
+                        <td>$170,750</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <input onkeyup="filter(this)" type="text" id="item_name_input_1" placeholder="Type to Search" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <input type="hidden" name="" id="item_id_input_1" >
+        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+            <button class="dropdown-item item" type="button" onclick="search_select(this, 1)" id="aaa">
+                <span class="name">거래처 1</span>
+                
+            </button>
+            <button class="dropdown-item item" type="button" onclick="search_select(this,1)" id="bbb">
+                <span class="name">가나다 </span>
+            </button>
+            <button class="dropdown-item item" type="button" onclick="search_select(this,1)" id="ccc">
+                <span class="name">라마바</span>
+            </button>
+          </div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        <input onkeyup="filter(this)" type="text" id="item_name_input_2" placeholder="Type to Search" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <input type="hidden" name="" id="item_id_input_2" >
+        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+            <button class="dropdown-item item" type="button" onclick="search_select(this,2)" id="aaa">
+                <span class="name">거래처 1</span>
+                
+            </button>
+            <button class="dropdown-item item" type="button" onclick="search_select(this,2)" id="bbb">
+                <span class="name">가나다 </span>
+            </button>
+            <button class="dropdown-item item" type="button" onclick="search_select(this,2)" id="ccc">
+                <span class="name">라마바</span>
+            </button>
+          </div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        <input onkeyup="filter(this)" type="text" id="item_name_input" placeholder="Type to Search" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <input type="hidden" name="" id="item_id_input" >
+        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+            <button class="dropdown-item item" type="button" onclick="search_select(this,3)" id="aaa">
+                <span class="name">거래처 1</span>
+            </button>
+            <button class="dropdown-item item" type="button" onclick="search_select(this,3)" id="bbb">
+                <span class="name">가나다 </span>
+            </button>
+            <button class="dropdown-item item" type="button" onclick="search_select(this,3)" id="ccc">
+                <span class="name">라마바</span>
+            </button>
+          </div>
+    </div>
+</div>
+{% endblock contents %}
+
+{% block javascripts %}
+
+
+<script type="text/javascript">
+    function filter(params){
+
+      var value, name, item, i;
+
+      value = document.getElementById(params.id).value.toUpperCase();
+      item = document.getElementsByClassName("item");
+
+      for(i=0;i<item.length;i++){
+        name = item[i].getElementsByClassName("name");
+        if(name[0].innerHTML.toUpperCase().indexOf(value) > -1){
+          item[i].style.display = "flex";
+        }else{
+          item[i].style.display = "none";
+        }
+      }
+    }
+    function search_select(params, count) {
+        var search_id = params.id;
+        document.getElementById("item_id_input_"+String(count)).value = search_id
+        document.getElementById("item_name_input_"+String(count)).value = params.getElementsByClassName("name")[0].innerText;
+    }
+</script>
+{% endblock javascripts %}
