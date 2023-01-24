@@ -25,66 +25,25 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr >
-                        <tr data-toggle="collapse" href="#table_1" role="button" aria-expanded="false" aria-controls="collapseExample">
-                            <td>2023-01-09 09:00:00</td>
-                            <td>갤럭시탬</td>
-                            <td>삼성</td>
-                            <td>1</td>
-                            <td>300,000,000</td>
-                            <td>300,000,000</td>
-                        </tr>
-                        <table class="table collapse" id="table_1">
-                            <thead>
 
-                            </thead>
-                            <tbody>
-                                <tr >
-                                    <td>2023-01-09 09:00:00</td>
-                                    <td>갤럭시탬</td>
-                                    <td>삼성</td>
-                                    <td>1</td>
-                                    <td>300,000,000</td>
-                                    <td>300,000,000</td>
-                                </tr>
-                            </tbody>  
-                        </table>
-                        
-                    </tr>
-
-                    
-
+                    {% for i in buy_datas %}
                     <tr>
-                        <table class="table">
-                            <tbody>
-                                <tr data-toggle="collapse" href="#table_3" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                    <td>aa</td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="collapse" id="table_3">
-                            <div class="card card-body">
-                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-                              </div>
-                        </div>
+                        <td>{{i.buy_date}}</td>
+                        <td>{{i.item_id.item_name}}</td>
+                        <td>{{i.client_id.client_corp_name}}</td>
+                        <td>{{i.count}}</td>
+                        <td>{{i.unit_price}}</td>
+                        <td>{{i.total_money}}</td>
                     </tr>
-                    <tr>
-                        <table class="table">
-                            <tbody>
-                                <tr data-toggle="collapse" href="#table_2" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                    <td>aa</td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="collapse" id="table_2">
-                            <div class="card card-body">
-                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-                              </div>
-                        </div>
-                    </tr>
+                    {% endfor %}
+
+
+
                 </tbody>
+                <tfoot>
+
+                </tfoot>
+
             </table>
         </div>
     </div>
@@ -102,7 +61,9 @@
           </button>
         </div>
         <div class="modal-body">
-            <form action="/buy/create/" method="post" id="buy_create">
+            <form action="" method="post" id="buy_create" autocomplete="off">
+                
+                <input type="hidden" id="buy_create_number" value="1">
                 <div class="card mb-3">
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                         <h6>일괄 설정</h6>
@@ -130,7 +91,7 @@
                                 <div class="row align-items-center">
                                     <label for="" class="col-sm-3">일괄 설정 날짜</label>
                                     <div class="col-sm-9">
-                                        <input type="date" class="col-lg-6 form-control" >
+                                        <input type="date" class="col-lg-6 form-control" onchange="select_buy_date(this)">
 
                                     </div>
                                 </div>
@@ -147,40 +108,39 @@
                         <thead>
                             <th>추가</th>
                             <th>구입일</th>
+                            <th>품번</th>
                             <th>품목</th>
-    
                             <th>수량</th>
                             <th>단가</th>
                             <th>부가세여부</th>
-    
-    
+                            <th>합계</th>
                         </thead>
                         <tbody>
                             <tr>
                                 <td><button type="button" onclick="" class="btn">+</button></td>
-                                <td><input class="form-control" type="date" name="" id="" placeholder="구입일"></td>
+                                <td><input class="form-control" type="date" name="" id="buy_date_0" placeholder="구입일"></td>
                                 <td>
-                                    <input class="form-control" type="text" name="item_name" id="item_name_input_1" placeholder="품목" onkeyup="filter(this)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <input type="hidden" name="item_id" id="item_id_input_1">
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-    
-                                        <button class="dropdown-item item" type="button" onclick="item_search_select(this,1)" id="aaa">
-                                            <span class="name">거래처 1</span>
+                                    <input class="form-control" type="text" name="item_name" id="item_serial_number_0" placeholder="품번" onkeyup="filter(this)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                                    <input type="hidden" name="item_id" id="item_id_0">
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2" >
+                                        <div id="item_dropdown_"></div>
+                                        <hr>
+                                        <button class="dropdown-item item" type="button" onclick="item_search_select(this, 0)" id="none">
+                                            <span class="name">새로 입력하기</span>
                                         </button>
-                                        <button class="dropdown-item item" type="button" onclick="item_search_select(this,1)" id="bbb">
-                                            <span class="name">가나다 </span>
-                                        </button>
-                                        <button class="dropdown-item item" type="button" onclick="item_search_select(this,1)" id="ccc">
-                                            <span class="name">라마바</span>
-                                        </button>
+
+
                                     </div>
                                 </td>
-                                <td><input class="form-control" type="number" name="" id="" placeholder="수량"></td>
-                                <td><input class="form-control" type="number" name="" id="" placeholder="단가"></td>
-                                <td><input type="checkbox" name="" id=""></td>
+                                <td><input class="form-control" type="text" name="" id="item_name_0" placeholder="품목"></td>
+                                <td><input class="form-control" type="number" name="" id="buy_count_0" placeholder="수량" onchange="total_money_account(0)"></td>
+                                <td><input class="form-control" type="number" name="" id="buy_unit_price_0" placeholder="단가" onchange="total_money_account(0)"></td>
+                                <td><input type="checkbox" name="" id="vat_check_0" onchange="total_money_account(0)"></td>
+                                <td><input class="form-control" type="number" name="" id="total_money_0" value="0"></td>
                                 
                             </tr>
                         </tbody>
+
                     </table>
                 </div>
                 
@@ -188,41 +148,120 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-          <button type="submit" class="btn btn-primary" onclick="document.getElementById('buy_create').submit()">등록</button>
+          <button type="submit" class="btn btn-primary" onclick="create_buy_data()">등록</button>
         </div>
       </div>
     </div>
   </div>
+
+
+
 {% endblock modals %}
 
 {% block javascripts %}
 
 <script type="text/javascript">
+
+
+
+
+
+    function insert_input_form(params) {
+        
+    }
     function filter(params){
-
       var value, name, item, i;
-
       value = document.getElementById(params.id).value.toUpperCase();
       item = document.getElementsByClassName("item");
-
       for(i=0;i<item.length;i++){
         name = item[i].getElementsByClassName("name");
-        if(name[0].innerHTML.toUpperCase().indexOf(value) > -1){
-          item[i].style.display = "flex";
-        }else{
-          item[i].style.display = "none";
-        }
+        if(name[0].innerHTML.toUpperCase().indexOf(value) > -1){item[i].style.display = "flex";}else{item[i].style.display = "none";}
       }
     }
-    function item_search_select(params, count) {
+    function item_search_select(params, count) { 
         var search_id = params.id;
-        document.getElementById("item_id_input_"+String(count)).value = search_id
-        document.getElementById("item_name_input_"+String(count)).value = params.getElementsByClassName("name")[0].innerText;
+        if (search_id == "none"){
+            document.getElementById("item_id_"+String(count)).value = ""
+            document.getElementById("item_serial_number_"+String(count)).value = ""
+            document.getElementById("item_name_"+String(count)).value = ""
+        }
+        else {
+            document.getElementById("item_id_"+String(count)).value = search_id
+            document.getElementById("item_serial_number_"+String(count)).value = params.getElementsByClassName("name")[0].innerText;
+            document.getElementById("item_name_"+String(count)).value = params.getElementsByClassName("item_name")[0].value
+        }
     }
     function client_search_select(params) {
         var search_id = params.id;
         document.getElementById("client_id").value = search_id
         document.getElementById("client_name_input").value = params.getElementsByClassName("name")[0].innerText;
+
+        $.ajax({
+            type:"GET",
+            url:"/search/items/?client_id="+ search_id,
+            success : function(params){
+                document.getElementById("item_dropdown_").innerHTML = ""
+                console.log(params.length)
+                for(var i = 0; i<params.length; i++){
+                    console.log(params[i]["item_name"])
+                    html = ""
+                    html += '<button class="dropdown-item item" type="button" onclick="item_search_select(this,'+i+')" id="'+params[i]["item_id"]+'">'
+                    html += '<input type="hidden" class="item_name" name="" value="'+params[i]["item_name"]+'">'
+                    html += '<span class="name">'+params[i]["serial_number"]+'</span>'
+                    html += '</button>'
+                    document.getElementById("item_dropdown_").innerHTML += html
+                }
+            }
+        })
     }
+
+    function select_buy_date(params) {
+        var create_number = document.getElementById("buy_create_number").value;
+        for (var i =0; i<Number(create_number); i++){
+            console.log(i)
+            document.getElementById("buy_date_"+i).value = params.value
+        }
+    }
+
+    function total_money_account(params) {
+        var count = document.getElementById("buy_count_"+params).value
+        var price =  document.getElementById("buy_unit_price_"+params).value
+        var vat_check = document.getElementById("vat_check_"+params).checked
+        if (vat_check == true){
+            var total_money = price * count
+        } else if (vat_check == false){
+            var total_money = (price *1.1 )*count
+        }
+        document.getElementById("total_money_"+params).value = (total_money).toFixed()
+        
+
+    }
+
+
+    function create_buy_data(params) {
+        var create_number = document.getElementById("buy_create_number").value
+        for (var i = 0; i<create_number; i++){
+            var data = {
+                "client_id" : document.getElementById("client_id").value,
+                "buy_date" : document.getElementById("buy_date_"+i).value,
+                "item_id" : document.getElementById("item_id_"+i).value,
+                "item_serial_number" : document.getElementById("item_serial_number_"+i).value,
+                "item_name" : document.getElementById("item_name_"+i).value,
+                "count" : document.getElementById("buy_count_"+i).value,
+                "unit_price" : document.getElementById("buy_unit_price_"+i).value,
+                "vat_check" : document.getElementById("vat_check_"+i).value, 
+            }
+            $.ajaxSetup({headers: {"X-CSRFToken":'{{csrf_token}}'}});
+            $.ajax({
+                type : "POST",
+                url : "/buy/create/",
+                data : data,
+                dataType:"JSON",
+                success : function(params){console.log(params)},
+            })
+        }
+    }
+
+
 </script>
 {% endblock javascripts %}

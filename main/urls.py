@@ -4,8 +4,12 @@ from main import views
 
 app_name = "main"
 urlpatterns = [
+
+    path("login/", views.login_view, name='login'),
+
     path("", views.main, name='main'),
     path("buy/", views.buy_view, name="buy_view"),
+    path("buy/create/", views.buy_create, name="buy_create"),
 
 
 
@@ -17,7 +21,7 @@ urlpatterns = [
     path("client/modify/", views.client_modify, name="client_modify"),
 
 
-
+    path("search/items/", views.search_items, name="search_items"),
 
 
 ]
